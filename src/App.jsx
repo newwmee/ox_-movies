@@ -9,12 +9,9 @@ function App() {
   const [movieList] = useState(movieListData.results);
   return (
     <>
-      <header>
-        <Layout />
-      </header>
-      <main>
-        <Routes>
-          {/* MovieCard를 여러 개 렌더링 */}
+      <Routes>
+        {/* MovieCard를 여러 개 렌더링 */}
+        <Route path="/" element={<Layout />}>
           <Route
             path="/"
             element={
@@ -27,8 +24,8 @@ function App() {
           />
           {/* MovieDetail 페이지 설정 */}
           <Route path="/details" element={<MovieDetail />} />
-        </Routes>
-      </main>
+        </Route>
+      </Routes>
     </>
   );
 }
