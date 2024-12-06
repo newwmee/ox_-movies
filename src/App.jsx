@@ -4,6 +4,7 @@ import MovieCard from "./components/MovieCard";
 import MovieDetail from "./pages/MovieDetail";
 import movieListData from "./data/movieListData.json";
 import Layout from "./components/Layout";
+import "./App.css";
 
 function App() {
   const [movieList] = useState(movieListData.results);

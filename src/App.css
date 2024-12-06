@@ -1,11 +1,3 @@
-.movie-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  padding: 20px;
-}
-
 .movie-card {
   width: 200px;
   border: 1px solid #ccc;
@@ -33,8 +25,4 @@
 
 .movie-card__rating {
   color: #666;
-}
-
-main {
-  background-color: #1c1c1c;
 }
