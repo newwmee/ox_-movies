@@ -3,14 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import MovieCard from "./components/MovieCard";
 import MovieDetail from "./pages/MovieDetail";
 import movieListData from "./data/movieListData.json";
-import Navbar from "./components/Navvar";
+import Layout from "./components/Layout";
 
 function App() {
   const [movieList] = useState(movieListData.results);
   return (
     <>
       <header>
-        <Navbar />
+        <Layout />
       </header>
       <main>
         <Routes>
@@ -26,7 +26,7 @@ function App() {
             }
           />
           {/* MovieDetail 페이지 설정 */}
-          <Route path="/details/:id" element={<MovieDetail />} />
+          <Route path="/details" element={<MovieDetail />} />
         </Routes>
       </main>
     </>

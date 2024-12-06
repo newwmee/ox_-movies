@@ -6,14 +6,14 @@ const MovieCard = ({ item }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate("/details/${item.id}");
+    navigate("/details");
   };
   return (
     <div className="movie-card-main" onClick={handleCardClick}>
       <img
         className="movie-poster-main"
         src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-        alt={item.title} // alt 속성에 제목을 넣어줍니다.
+        alt={item.title} // alt 속성에 제목
       />
       <p className="movie-title-main">{item.title}</p>
       <p className="movie-rating-main">⭐{item.vote_average}</p>

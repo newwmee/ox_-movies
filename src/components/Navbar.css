@@ -5,12 +5,12 @@
   padding: 10px 20px;
   background-color: black;
 }
-.navbar-logo {
+.nav-logo {
   color: purple;
   font-size: 24px;
   font-weight: bold;
 }
-.navbar-button button {
+.nav-button button {
   margin-left: 10px;
   padding: 8px 16px;
   border: none;
