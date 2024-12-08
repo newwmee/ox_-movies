@@ -5,8 +5,8 @@ const MovieCard = ({ item }) => {
   // props에서 item을 구조 분해
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
-    navigate("/details");
+  const handleCardClick{() => 
+    navigate("/details/ ${item.id}")};
   };
   return (
     <div className="movie-card-main" onClick={handleCardClick}>
