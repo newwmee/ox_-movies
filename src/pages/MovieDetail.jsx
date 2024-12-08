@@ -9,9 +9,10 @@ const MovieDetail = () => {
 
   // useEffect를 사용하여 컴포넌트가 렌더링될 때 API 요청을 보냄
   useEffect(() => {
+    console.log("API Key:", process.env.REACT_APP_TMDB_API_KEY);
     const fetchMovieDetails = async () => {
-      const apiKey = process.env.REACT_APP_TMDB_API_KEY; // .env 파일에서 API 키를 가져옴
-      const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+      const apiKey = process.env.REACT_APP_TMDB_API_KEYY; // .env 파일에서 API 키를 가져옴
+      const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.TMDB_API_KEY}`;
 
       try {
         const response = await fetch(url);

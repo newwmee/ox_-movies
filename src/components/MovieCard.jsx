@@ -12,7 +12,7 @@ const MovieCard = ({ item }) => {
     <div className="movie-card-main" onClick={handleCardClick}>
       <img
         className="movie-poster-main"
-        src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+        src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
         alt={item.title} // alt 속성에 제목
       />
       <p className="movie-title-main">{item.title}</p>
