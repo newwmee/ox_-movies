@@ -23,8 +23,8 @@ function App() {
               </div>
             }
           />
-          {/* MovieDetail 페이지 설정 */}
-          <Route path="/details" element={<MovieDetail />} />
+          {/* MovieDetail 페이지에서 movieId를 URL 파라미터로 받도록 설정 */}
+          <Route path="/details/:movieId" element={<MovieDetail />} />
         </Route>
       </Routes>
     </>
