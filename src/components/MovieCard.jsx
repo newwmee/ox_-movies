@@ -19,6 +19,6 @@ const MovieCard = ({ item }) => {
       <p className="movie-rating-main">⭐{item.vote_average}</p>
     </div>
   );
-};
+}; // 랜더링 컴포넌트 - 포스터와 제목 평점 렌더링
 
 export default MovieCard;

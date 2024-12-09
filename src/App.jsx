@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/NavBar"; // Navbar 추가
 import MovieCard from "./components/MovieCard";
-import MovieDetail from "./pages/MovieDetail"; // MovieDetail을 별도로 가져옴
-import Layout from "./components/Layout";
-import { getMovieList } from "./axios"; // API 호출 함수
+import MovieDetail from "./pages/MovieDetail";
+import Layout from "./components/Layout"; // Layout 추가
+import { getMovieList, searchMovies } from "./axios"; // API 호출 함수
 import "./App.css";
 
 function App() {
-  const [movieList, setMovieList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [movieList, setMovieList] = useState([]); // 영화 목록 상태
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
 
+  // 검색어를 전달받고 API 호출
+  const handleSearch = async (query) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const movies = await searchMovies(query);
+      setMovieList(movies);
+    } catch (err) {
+      setError("영화 목록을 가져오는 데 실패했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 인기 영화 목록을 가져오는 useEffect
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
@@ -39,21 +55,24 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route
-          path="/"
-          element={
-            <div className="movie-list">
-              {movieList.map((movie) => (
-                <MovieCard key={movie.id} item={movie} />
-              ))}
-            </div>
-          }
-        />
-        <Route path="/details/:movieId" element={<MovieDetail />} />
-      </Route>
-    </Routes>
+    <div className="App">
+      <Navbar onSearch={handleSearch} /> {/* Navbar에 onSearch 전달 */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            path="/"
+            element={
+              <div className="movie-list">
+                {movieList.map((movie) => (
+                  <MovieCard key={movie.id} item={movie} />
+                ))}
+              </div>
+            }
+          />
+          <Route path="/details/:movieId" element={<MovieDetail />} />
+        </Route>
+      </Routes>
+    </div>
   );
 }
 
