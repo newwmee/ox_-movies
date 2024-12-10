@@ -1,7 +1,9 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "./NavBar";
 
-const Layout = () => (
+const Layout = ({ onSearch, searchResults = [] }) => (
   <>
+    <Navbar onSearch={onSearch} searchResults={searchResults} />
     <main>
       <Outlet />
     </main>

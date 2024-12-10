@@ -1,3 +1,4 @@
+/* 영화 상세 페이지 컨테이너 */
 .movie-detail-container {
   display: flex;
   min-height: 110vh;
@@ -8,6 +9,7 @@
   color: #fff;
 }
 
+/* 영화 상세 항목 */
 .movie-detail-item {
   display: flex;
   gap: 20px;
@@ -15,6 +17,7 @@
   width: 100%;
 }
 
+/* 영화 포스터 */
 .movie-detail-poster {
   width: 300px;
   height: 450px;
@@ -23,23 +26,27 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* 영화 정보 */
 .movie-detail-info {
   flex-grow: 1;
   padding: 20px;
 }
 
+/* 영화 제목 */
 .movie-title {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
+/* 영화 평점 */
 .movie-vote {
   font-size: 1.2rem;
   color: #ffcc00;
   margin-bottom: 10px;
 }
 
+/* 영화 장르 */
 .movie-genres {
   display: flex;
   gap: 10px;
@@ -53,6 +60,7 @@
   font-size: 1rem;
 }
 
+/* 영화 설명 */
 .movie-overview {
   font-size: 1rem;
   line-height: 1.6;
