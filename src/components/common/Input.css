@@ -1,0 +1,30 @@
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff; /* 라벨 색상을 흰색으로 변경 */
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: rgb(139, 0, 139);
+}
+
+.input-group input::placeholder {
+  color: #aaa;
+}
