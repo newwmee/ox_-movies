@@ -1,4 +1,4 @@
-.auth-container {
+.signup-container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -7,7 +7,7 @@
   padding: 20px;
 }
 
-.auth-form {
+.signup-form {
   background-color: #222;
   padding: 30px;
   border-radius: 8px;
@@ -16,27 +16,28 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.auth-form h2 {
+.signup-form h2 {
   color: rgb(139, 0, 139);
   text-align: center;
   margin-bottom: 25px;
   font-size: 24px;
 }
 
-.input-group {
+.signup-input-group {
+  width: 100%;
   margin-bottom: 20px;
 }
 
 /* 라벨의 글씨 색상만 하얀색으로 변경 */
-.input-group label {
+.signup-input-group label {
   display: block;
   margin-bottom: 8px;
   color: #ffffff; /* 라벨 글씨 색상 하얀색 */
   font-size: 14px;
 }
 
-.input-group input {
-  width: 100%;
+.signup-input-group input {
+  width: 95%;
   padding: 12px;
   border: 2px solid #fff;
   border-radius: 4px;
@@ -55,7 +56,7 @@
   color: #aaa;
 }
 
-.auth-form button {
+.signup-form button {
   width: 100%;
   padding: 12px;
   background-color: rgb(139, 0, 139);
@@ -68,7 +69,7 @@
   margin-top: 10px;
 }
 
-.auth-form button:hover {
+.signup-form button:hover {
   background-color: rgb(151, 54, 151);
 }
 
@@ -83,11 +84,11 @@
 }
 
 @media (max-width: 480px) {
-  .auth-form {
+  .signup-form {
     padding: 20px;
   }
 
-  .auth-form h2 {
+  .signup-form h2 {
     font-size: 20px;
     margin-bottom: 20px;
   }
@@ -97,7 +98,7 @@
     font-size: 14px;
   }
 
-  .auth-form button {
+  .signup-form button {
     padding: 10px;
     font-size: 14px;
   }

@@ -1,10 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../superbaseClient";
+import { useSupabaseAuth } from "../hooks/useSupabaseAuth";
 import "./Login.css";
 
+// 카카오 로그인 버튼 클릭 핸들러
+const handleKakaoLogin = () => {
+  // 카카오 SDK의 로그인 함수 호출
+  if (window.Kakao) {
+    window.Kakao.Auth.login({
+      success: function (authObj) {
+        console.log("카카오 로그인 성공:", authObj);
+        // 로그인 성공 후 필요한 추가 작업 수행 (예: 토큰 서버 전송)
+        navigate("/");
+        window.location.reload();
+      },
+      fail: function (err) {
+        console.error("카카오 로그인 실패:", err);
+        setError("카카오 로그인에 실패했습니다.");
+      },
+    });
+  } else {
+    console.error("Kakao SDK가 로드되지 않았습니다.");
+  }
+};
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useSupabaseAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,22 +37,14 @@ const Login = () => {
     setError(null);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      if (data.user) {
+      const result = await login(formData);
+      if (!result.error) {
         navigate("/");
         window.location.reload(); // 로그인 성공 시 페이지 새로고침
       }
-    } catch (err) {
-      setError(err.message);
-      console.error("로그인 오류:", err.message);
+    } catch (error) {
+      setError(error);
+      console.error("로그인 오류:", error);
     }
   };
 
@@ -69,6 +82,12 @@ const Login = () => {
         </div>
         {error && <div className="error-message">{error}</div>}
         <button type="submit">로그인</button>
+
+        <div className="kakao - login - container">
+          <button className="kakao-login-button" onClick={handleKakaoLogin}>
+            카카오로 로그인
+          </button>
+        </div>
       </form>
     </div>
   );

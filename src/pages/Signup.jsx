@@ -81,8 +81,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
         <h2>회원가입</h2>
         <Input
           label="이름"

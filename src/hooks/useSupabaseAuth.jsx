@@ -1,31 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-import { createContext, useContext } from "react";
-
-const supabaseEnv = {
-  apiKey: import.meta.env.VITE_SUPABASE_API_KEY,
-  projectURL: import.meta.env.VITE_SUPABASE_PROJECT_URL,
-};
-
-export const supabaseClient = createClient(
-  supabaseEnv.projectURL,
-  supabaseEnv.apiKey
-);
-const SUPABASE = createContext(null);
-
-export const SupabaseProvider = ({ children }) => {
-  return (
-    <SUPABASE.Provider value={supabaseClient}>{children}</SUPABASE.Provider>
-  );
-};
-
-export const useSupabase = () => {
-  const supabase = useContext(SUPABASE);
-  if (!supabase) {
-    new Error("supabase가 초기화 되지 않았습니다.");
-    return;
-  }
-  return supabase;
-};
+import { useState, useEffect } from "react";
+import { useSupabase } from "../superbaseClient.jsx";
 
 const DTO_TYPE = {
   error: "error",
@@ -46,50 +20,41 @@ const dto = ({ type, rawData }) => {
       };
     case DTO_TYPE.error:
       const { error: rawError } = rawData;
-
       return {
         error: {
           status: rawError.status,
           message: rawError.message,
         },
       };
-
     default:
-      new Error("wrong type accessed");
-      return;
+      throw new Error("wrong type accessed");
   }
 };
 
 export const useSupabaseAuth = () => {
   const supabase = useSupabase();
-  const signUp = async ({ email, password, ...userData }) => {
-    try {
-      const data = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            profileImageUrl:
-              "https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295396_1280.png",
-            ...userData,
-          },
-        },
-      });
+  const [user, setUser] = useState(null);
 
-      return dto({
-        type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
-        rawData: data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, [supabase]);
 
   const login = async ({ email, password }) => {
     const data = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+
     return dto({
       type: !data.error ? DTO_TYPE.user : DTO_TYPE.error,
       rawData: data,
@@ -97,11 +62,18 @@ export const useSupabaseAuth = () => {
   };
 
   const logout = async () => {
-    return await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut({ scope: "local" });
+      setUser(null);
+      localStorage.clear();
+      window.location.reload();
+    } catch (error) {
+      console.error("로그아웃 에러:", error);
+    }
   };
 
   return {
-    signUp,
+    user,
     login,
     logout,
   };

@@ -10,6 +10,8 @@ const NavBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
+  console.log("현재 유저 상태:", user);
+
   // 로고 클릭 핸들러
   const handleLogoClick = (e) => {
     e.preventDefault();
@@ -61,7 +63,7 @@ const NavBar = ({ onSearch }) => {
               onClick={() => setShowDropdown(!showDropdown)}
               onMouseEnter={() => setShowDropdown(true)}
             >
-              <img src={defaultProfile} alt="프로필" />
+              <img src={defaultProfile} alt="프로필" className="profile-img" />
             </div>
             {showDropdown && (
               <div
