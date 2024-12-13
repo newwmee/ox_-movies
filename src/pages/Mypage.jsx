@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MyPage.css";
+import "./Mypage.css";
 import { useUser } from "./Login";
 import { useSupabaseAuth } from "../hooks/useSupabaseAuth"; // 추가
 import defaultProfile from "../assets/default-profile.png";
