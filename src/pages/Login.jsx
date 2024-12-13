@@ -49,7 +49,6 @@ const Login = () => {
       const result = await login(formData);
       if (!result.error) {
         navigate("/");
-        window.location.reload();
       }
     } catch (error) {
       setError(error.message);

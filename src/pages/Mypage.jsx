@@ -1,21 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyPage.css";
 import { useUser } from "./Login";
+import { useSupabaseAuth } from "../hooks/useSupabaseAuth"; // 추가
+import defaultProfile from "../assets/default-profile.png";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user: contextUser } = useUser();
+  const { user: supabaseUser } = useSupabaseAuth();
+  const [imageLoaded, setImageLoaded] = useState(true);
 
   useEffect(() => {
-    if (!user) {
+    if (!contextUser) {
       alert("로그인이 필요한 서비스입니다.");
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [contextUser, supabaseUser, navigate]);
 
-  if (!user) return null;
-
+  if (!contextUser) return null;
   return (
     <div className="mypage-wrapper">
       <h2 className="mypage-title">마이페이지</h2>
@@ -23,23 +26,25 @@ const MyPage = () => {
         <div className="profile-section">
           <div className="profile-image-wrapper">
             <img
-              src={user.profileImageUrl || "/profile_image.jpg"}
+              src={defaultProfile}
               alt="프로필"
-              className="profile-img"
+              className={`profile - img ${imageLoaded ? "loaded" : ""}`}
+              onLoad={() => setImageLoaded(true)}
               onError={(e) => {
-                e.target.src = "/profile_image.jpg";
+                e.target.src = defaultProfile;
+                setImageLoaded(true);
               }}
             />
           </div>
           <div className="profile-info">
             <div className="info-item">
               <span className="info-label">이메일</span>
-              <span className="info-value">{user.email}</span>
+              <span className="info-value">{useUser.email}</span>
             </div>
-            {user.nickname && (
+            {useUser.nickname && (
               <div className="info-item">
                 <span className="info-label">닉네임</span>
-                <span className="info-value">{user.nickname}</span>
+                <span className="info-value">{useUser.nickname}</span>
               </div>
             )}
           </div>
