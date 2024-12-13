@@ -70,7 +70,7 @@ const NavBar = ({ onSearch }) => {
                 className="profile-dropdown"
                 onMouseLeave={() => setShowDropdown(false)}
               >
-                <button onClick={() => navigate("/mypage")}>마이 페이지</button>
+                <button onClick={() => navigate("/Mypage")}>마이 페이지</button>
                 <button onClick={handleLogout}>로그아웃</button>
               </div>
             )}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom"; // BrowserRouter 제거
-import Navbar from "./components/NavBar";
 import MovieCard from "./components/MovieCard";
 import MovieDetail from "./pages/MovieDetail";
 import Layout from "./components/Layout";
@@ -9,6 +8,7 @@ import Signup from "./pages/Signup";
 import { getMovieList, searchMovies } from "./axios";
 import { useSupabaseAuth } from "./hooks/useSupabaseAuth";
 import "./App.css";
+import MyPage from "./pages/Mypage";
 
 function App() {
   const { user } = useSupabaseAuth();
@@ -85,6 +85,7 @@ function App() {
             }
           />
           <Route path="/details/:movieId" element={<MovieDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Route>
       </Routes>
     </div>

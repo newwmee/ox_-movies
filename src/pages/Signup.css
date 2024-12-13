@@ -17,7 +17,7 @@
 }
 
 .signup-form h2 {
-  color: rgb(139, 0, 139);
+  color: #fff;
   text-align: center;
   margin-bottom: 25px;
   font-size: 24px;
@@ -26,34 +26,37 @@
 .signup-input-group {
   width: 100%;
   margin-bottom: 20px;
+  color: white;
 }
 
 /* 라벨의 글씨 색상만 하얀색으로 변경 */
-.signup-input-group label {
+label {
   display: block;
-  margin-bottom: 8px;
+  margin-top: 5px;
+  margin-bottom: 1px;
   color: #ffffff; /* 라벨 글씨 색상 하얀색 */
   font-size: 14px;
 }
 
 .signup-input-group input {
-  width: 95%;
-  padding: 12px;
+  width: 100%;
+  padding: 6px;
   border: 2px solid #fff;
   border-radius: 4px;
   background-color: #333;
   color: white;
   font-size: 16px;
   transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
-.input-group input:focus {
+.signup-input-group input::placeholder {
+  color: #aaa;
+}
+
+.signup-input-group input:focus {
   outline: none;
   border-color: rgb(139, 0, 139);
-}
-
-.input-group input::placeholder {
-  color: #aaa;
 }
 
 .signup-form button {

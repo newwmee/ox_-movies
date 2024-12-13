@@ -1,31 +1,40 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "../hooks/useSupabaseAuth";
 import "./Login.css";
+import { createClient } from "@supabase/supabase-js";
+import KAKAOBUTTON from "../assets/kakaotalk_sharing_btn_small.png";
 
-// 카카오 로그인 버튼 클릭 핸들러
-const handleKakaoLogin = () => {
-  // 카카오 SDK의 로그인 함수 호출
-  if (window.Kakao) {
-    window.Kakao.Auth.login({
-      success: function (authObj) {
-        console.log("카카오 로그인 성공:", authObj);
-        // 로그인 성공 후 필요한 추가 작업 수행 (예: 토큰 서버 전송)
-        navigate("/");
-        window.location.reload();
-      },
-      fail: function (err) {
-        console.error("카카오 로그인 실패:", err);
-        setError("카카오 로그인에 실패했습니다.");
-      },
-    });
-  } else {
-    console.error("Kakao SDK가 로드되지 않았습니다.");
-  }
+// Context 및 Provider 설정
+const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
+
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
+};
+
+// Supabase 클라이언트 설정
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_PROJECT_URL,
+  import.meta.env.VITE_SUPABASE_API_KEY
+);
+
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useSupabaseAuth();
+  const { setUser } = useUser();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -40,11 +49,40 @@ const Login = () => {
       const result = await login(formData);
       if (!result.error) {
         navigate("/");
-        window.location.reload(); // 로그인 성공 시 페이지 새로고침
+        window.location.reload();
       }
     } catch (error) {
-      setError(error);
+      setError(error.message);
       console.error("로그인 오류:", error);
+    }
+  };
+
+  const handleKakaoLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo: import.meta.env.VITE_KAKAO_REDIRECT_URI,
+          queryParams: {
+            client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.user) {
+        setUser({
+          id: data.user.id,
+          email: data.user.email,
+          profileImageUrl: data.user.user_metadata?.avatar_url,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("카카오 로그인 실패:", error);
+      setError("카카오 로그인에 실패했습니다.");
     }
   };
 
@@ -83,10 +121,13 @@ const Login = () => {
         {error && <div className="error-message">{error}</div>}
         <button type="submit">로그인</button>
 
-        <div className="kakao - login - container">
-          <button className="kakao-login-button" onClick={handleKakaoLogin}>
-            카카오로 로그인
-          </button>
+        <div className="kakaosmallbutton">
+          소셜로그인
+          <img
+            src={KAKAOBUTTON}
+            alt="카카오로그인"
+            onClick={handleKakaoLogin}
+          />
         </div>
       </form>
     </div>

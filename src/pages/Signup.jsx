@@ -84,38 +84,40 @@ const Signup = () => {
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>회원가입</h2>
-        <Input
-          label="이름"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="이름을 입력하세요"
-        />
-        <Input
-          label="이메일"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="이메일을 입력하세요"
-        />
-        <Input
-          label="비밀번호"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="비밀번호를 입력하세요"
-        />
-        <Input
-          label="비밀번호 확인"
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          placeholder="비밀번호를 다시 입력하세요"
-        />
+        <div className="signup-input-group">
+          <Input
+            label="이름"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="이름은 2~8자의 한글, 영어, 숫자만 가능"
+          />
+          <Input
+            label="이메일"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="ex) user1354@naver.com"
+          />
+          <Input
+            label="비밀번호"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="비밀번호는 영어 대/소문자와 숫자를 포함"
+          />
+          <Input
+            label="비밀번호 확인"
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            placeholder="비밀번호를 다시 입력해 주세요."
+          />
+        </div>
         {error && <div className="error-message">{error}</div>}
         <button type="submit">회원가입</button>
       </form>

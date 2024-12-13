@@ -1,10 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Input.css"; // Input 컴포넌트의 스타일
-
-const Input = ({ label, type, name, value, onChange, placeholder }) => {
+const Input = ({
+  label,
+  type,
+  name,
+  value,
+  onChange,
+  placeholder,
+  className,
+}) => {
   return (
-    <div className="input-group">
+    <div className={className}>
       {label && <label htmlFor={name}>{label}</label>}
       <input
         type={type}
