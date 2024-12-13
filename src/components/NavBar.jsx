@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "../hooks/useSupabaseAuth";
 import defaultProfile from "../assets/default-profile.png";
-import "./NavBar.css";
+import "./abc.css";
 
 const NavBar = ({ onSearch }) => {
   const navigate = useNavigate();
