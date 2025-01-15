@@ -56,8 +56,8 @@ export const searchMovies = async (query) => {
 
 export const getSimilarMovies = async (movieId) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/movie/${movieId}/similar?api_key=${API_KEY}&language=ko-KR`
+    const response = await instance.get(
+      `movie/${movieId}/similar?language=ko-KR`
     );
     return response.data;
   } catch (error) {

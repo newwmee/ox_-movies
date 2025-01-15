@@ -16,7 +16,7 @@ const MovieDetail = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 10000,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
@@ -98,30 +98,33 @@ const MovieDetail = () => {
           </div>
         </div>
       )}
-      {similarMovies.length > 0 && (
-        <div className="similar-movies-section mt-8">
-          <h2 className="text-2xl font-bold mb-4">비슷한 영화</h2>
-          <Slider {...settings}>
-            {similarMovies.map((movie) => (
-              <div key={movie.id} className="px-2">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold">{movie.title}</h3>
-                    <p className="text-sm text-gray-600">
-                      ⭐ {movie.vote_average.toFixed(1)}
-                    </p>
+      {/* <div>
+        {similarMovies.length > 0 && (
+          // <div className="similar-movies-section mt-8">
+          <div className=" mt-8 h-50 w-20">
+            <h2 className="text-2xl font-bold mb-4">비슷한 영화</h2>
+            <Slider {...settings}>
+              {similarMovies.slice(0.4).map((movie) => (
+                <div key={movie.id} className="px-2">
+                  <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt={movie.title}
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold">{movie.title}</h3>
+                      <p className="text-sm text-gray-600">
+                        ⭐ {movie.vote_average.toFixed(1)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </Slider>
-        </div>
-      )}
+              ))}
+            </Slider>
+          </div>
+        )}
+      </div> */}
     </div>
   );
 };
