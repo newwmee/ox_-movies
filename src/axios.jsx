@@ -53,3 +53,15 @@ export const searchMovies = async (query) => {
     throw new Error("영화 검색에 실패했습니다.");
   }
 };
+
+export const getSimilarMovies = async (movieId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/movie/${movieId}/similar?api_key=${API_KEY}&language=ko-KR`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("비슷한 영화를 가져오는데 실패했습니다:", error);
+    throw error;
+  }
+};

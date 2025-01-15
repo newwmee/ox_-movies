@@ -1,49 +1,78 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetail } from "../axios"; // API 호출 함수
+import { getMovieDetail, getSimilarMovies } from "../axios"; // getSimilarMovies 추가
 import "./MovieDetail.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MovieDetail = () => {
-  // URL 파라미터에서 movieId 가져오기 - useParams 훅 사용
   const { movieId } = useParams();
-  //상태정의
-  //movieDetail: Api에서 가져온 영화 상세 데이터 저장
-  //isLoading: 데이터 로딩 상태 관리
-  // error: API 호출 실패 시 에러 메시지 저장
   const [movieDetail, setMovieDetail] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]); // 추가된 부분
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //데이터가져오기 useEffect 사용
-  // 컴포넌트가 마운트되거나 movieId가 변경될 때 TMDb API에서 데이터를 가져옴
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   useEffect(() => {
-    const fetchDetail = async () => {
-      setIsLoading(true); //로딩 상태 시작
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        //Api 호출을 통해 영화 상세데이터 가져오기
-        const detail = await getMovieDetail(movieId);
-        setMovieDetail(detail); //성공하면 영화 데이터 상태 업그레이드
+        // 두 API를 동시에 호출
+        const [detail, similar] = await Promise.all([
+          getMovieDetail(movieId),
+          getSimilarMovies(movieId),
+        ]);
+        setMovieDetail(detail);
+        setSimilarMovies(similar.results);
       } catch (err) {
-        console.error("영화 상세 정보를 가져오는 중 오류 발생:", err);
-        setError("영화 상세 정보를 가져오는 데 실패했습니다."); //에러 상태 설정
+        console.error("데이터를 가져오는 중 오류 발생:", err);
+        setError("데이터를 가져오는 데 실패했습니다.");
       } finally {
-        setIsLoading(false); //로딩 상태 종료
+        setIsLoading(false);
       }
     };
 
-    fetchDetail();
-  }, [movieId]); //movieId가 변경될 때마다 Api 호출
+    fetchData();
+  }, [movieId]);
 
-  //로딩및 에러상태 처리
   if (isLoading) {
-    return <div>로딩 중...</div>; //데이터 로딩중 화면 표시 - 있으면 좋다 사용자가 보기 편하기 때문
+    return <div>로딩 중...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; //에러 발생 시 화면 표시
+    return <div>{error}</div>;
   }
 
-  //영화 상세 정보 렌더링
   return (
     <div className="movie-detail-container">
       {movieDetail && (
@@ -67,6 +96,30 @@ const MovieDetail = () => {
             </div>
             <p className="movie-overview">{movieDetail.overview}</p>
           </div>
+        </div>
+      )}
+      {similarMovies.length > 0 && (
+        <div className="similar-movies-section mt-8">
+          <h2 className="text-2xl font-bold mb-4">비슷한 영화</h2>
+          <Slider {...settings}>
+            {similarMovies.map((movie) => (
+              <div key={movie.id} className="px-2">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold">{movie.title}</h3>
+                    <p className="text-sm text-gray-600">
+                      ⭐ {movie.vote_average.toFixed(1)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
         </div>
       )}
     </div>

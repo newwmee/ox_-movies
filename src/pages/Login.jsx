@@ -62,7 +62,6 @@ const Login = () => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
-          redirectTo: import.meta.env.VITE_KAKAO_REDIRECT_URI,
           queryParams: {
             client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
           },
