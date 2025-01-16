@@ -1,0 +1,31 @@
+.slider-container {
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #000;
+}
+
+.slick-slide {
+  padding: 0 10px;
+}
+
+.slick-list {
+  margin: 0 -10px;
+}
+.slider-container {
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.slick-slide {
+  padding: 0 10px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #000;
+}
