@@ -50,7 +50,7 @@ function MultipleItems({ movies }) {
                   movie.poster_path || "default.jpg"
                 }`} // 기본 이미지 추가
                 alt={movie.title}
-                className="w-full h-64 object-cover"
+                className="w-10 h-25 object-contain "
               />
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{movie.title}</h3>
