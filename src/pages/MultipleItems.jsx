@@ -44,15 +44,16 @@ function MultipleItems({ movies }) {
     <div className="slider-container">
       <Slider {...settings}>
         {movies.map((movie) => (
-          <div key={movie.id} className="px-2">
-            <div className="overflow-hidden">
+          <div key={movie.id} className="slider-item">
+            <div className="movie-card">
               <img
                 src={`https://image.tmdb.org/t/p/w500${
                   movie.poster_path || "default.jpg"
-                }`} // 기본 이미지 추가
+                }`}
                 alt={movie.title}
+                className="w-full h-auto"
               />
-              <div className="w-10px">
+              <div className="movie-info">
                 <h3 className="text-lg font-semibold">{movie.title}</h3>
                 {movie.vote_average && (
                   <p className="text-sm text-gray-600">
